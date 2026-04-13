@@ -126,7 +126,7 @@ export default function Home() {
     }
   }
 
-  function submitLead() {
+  async function submitLead() {
     if (!selectedBU) return;
     const tier = getTier(score);
     const newLead: Lead = {
