@@ -48,15 +48,14 @@ export default function AdminPage() {
     }
   }
 
-  function loadLeads() {
-    // En producción: fetch("/api/leads").then(r => r.json()).then(setLeads)
-    try {
-      const stored = localStorage.getItem("diag_ia_leads");
-      if (stored) setLeads(JSON.parse(stored));
-    } catch {
-      setLeads([]);
-    }
-  }
+  async function loadLeads() {
+  const { supabase } = await import('@/lib/supabase');
+  const { data } = await supabase
+    .from('leads')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (data) setLeads(data as Lead[]);
+}
 
   useEffect(() => {
     if (authed) loadLeads();

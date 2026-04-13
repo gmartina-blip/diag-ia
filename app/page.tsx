@@ -145,6 +145,18 @@ export default function Home() {
     // 👉 Aquí va tu webhook / Supabase. Por ahora: console.log
     console.log("[Diag.IA] Lead capturado:", newLead);
 
+// Guardar en Supabase
+const { supabase } = await import('@/lib/supabase');
+await supabase.from('leads').insert({
+  name: newLead.name,
+  email: newLead.email,
+  company: newLead.company,
+  role: newLead.role,
+  bu: newLead.bu,
+  score: newLead.score,
+  tier: newLead.tier,
+});
+
     // Para enviar a un webhook real, descomentá esto:
     // fetch("https://hook.make.com/TU_WEBHOOK_ID", {
     //   method: "POST",
